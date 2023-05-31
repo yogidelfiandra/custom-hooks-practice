@@ -1,8 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import MoviesGrid from './components/MoviesGrid';
+import MoviesList from './components/MoviesList';
+
+import './styles/style.css';
+
+/**
+ * @notes
+ * Aplikasi sudah berjalan dengan baik, tetapi masih terdapat
+ * duplikasi logika dalam menampilkan data film
+ * di komponen MoviesList dan MoviesGrid
+ *
+ * @todos
+ * Hapus duplikasi logika pada komponen MoviesList dan MoviesGrid
+ * dengan membuat custom hooks.
+ */
+
+function App() {
+  const [mode, setMode] = React.useState('list');
+
+  const modeChangeHandler = (event) => {
+    setMode(event.target.value);
+  };
+
+  return (
+    <main>
+      <select onChange={modeChangeHandler}>
+        <option value='list'>List Mode</option>
+        <option value='grid'>Grid Mode</option>
+      </select>
+
+      {mode === 'list' ? <MoviesList /> : <MoviesGrid />}
+    </main>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -10,8 +41,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
